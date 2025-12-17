@@ -36,7 +36,10 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            background-color: #FAF9F6;
+            background-color: var(--color-fondo);
+            background-blend-mode: multiply;
+            max-width: 100%;
+            margin: 0 auto;
         }
         /* 2. SECCIÓN NOMBRES */
         
@@ -247,11 +250,157 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* Estilos de la Navegación corregidos */
+        
+        .navbar {
+            background-color: var(--color-fondo);
+            /* Usamos el color crema del fondo pero sólido */
+            border-bottom: 1px solid rgba(128, 0, 32, 0.1);
+            /* Un borde burgundy muy suave */
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            /* Asegura que siempre esté por encima de todo */
+            /* Añadimos una sombra para que no se mezcle con las cards blancas */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--burgundy);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-link {
+            color: var(--color-texto);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+            /* Suaviza el cambio de color */
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--burgundy);
+        }
+        /* OPCIONAL: Una pequeña línea debajo al hacer hover */
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 5px;
+            left: 50%;
+            background-color: var(--burgundy);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        
+        .nav-link:hover::after {
+            width: 70%;
+            /* La línea crece al pasar el ratón */
+        }
+        /* Clase para resaltar la página actual (debes añadirla manualmente al HTML de cada página) */
+        
+        .nav-link.active {
+            color: var(--burgundy);
+        }
+        /* Menú hamburguesa para móvil */
+        /* Menú hamburguesa - Estilos generales fuera del media query */
+        
+        .menu-toggle {
+            display: none;
+            /* Se oculta en PC */
+            flex-direction: column;
+            cursor: pointer;
+            background: transparent;
+            /* Forzamos fondo transparente */
+            border: none;
+            padding: 5px;
+            z-index: 10001;
+            outline: none;
+        }
+        
+        .bar {
+            display: block;
+            /* Asegura que se renderice como bloque */
+            width: 25px;
+            height: 3px;
+            background-color: #800020 !important;
+            /* Forzamos el color Burgundy directo */
+            margin: 4px 0;
+            transition: all 0.4s ease;
+            border-radius: 3px;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+                /* Se muestra en móvil */
+            }
+            .nav-menu {
+                position: absolute;
+                top: 65px;
+                left: -100%;
+                flex-direction: column;
+                background-color: var(--color-fondo);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+                border-top: 1px solid rgba(128, 0, 32, 0.1);
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-menu li {
+                padding: 15px 0;
+            }
+        }
     </style>
 </head>
 
 <body>
-
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">M&Á</a>
+            <button class="menu-toggle" id="mobile-menu" aria-label="Abrir menú">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="confirm.html" class="nav-link">Asistencia</a></li>
+                <li><a href="musica.html" class="nav-link">Setlist</a></li>
+                <li><a href="sugerencias.html" class="nav-link">Sugerencias</a></li>
+            </ul>
+        </div>
+    </nav>
     <header class="hero"></header>
 
     <section class="names-heading">
@@ -373,6 +522,21 @@
                 card.classList.toggle('expanded');
                 btn.textContent = card.classList.contains('expanded') ? "Leer menos" : "Leer más";
             });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const menu = document.querySelector('#mobile-menu');
+            const menuLinks = document.querySelector('.nav-menu');
+
+            if (menu) {
+                menu.addEventListener('click', function() {
+                    // Esto activa/desactiva la clase 'active' en la lista <ul>
+                    menuLinks.classList.toggle('active');
+                    // Esto sirve por si quieres animar la hamburguesa a X
+                    menu.classList.toggle('is-active');
+                });
+            }
         });
     </script>
 </body>

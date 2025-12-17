@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugerencias - Marta y Ángel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --burgundy: #800020;
+            --color-texto: #333333;
+            --color-fondo: #f9f6f2;
+            --blanco: #ffffff;
+        }
+        /* ESTRUCTURA PARA FOOTER FIJO ABAJO */
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 550px;
+            padding: 40px 20px;
+            margin: 0 auto;
+            flex: 1;
+            /* Empuja el footer al final */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .intro-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .intro-section h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--color-texto);
+            margin-bottom: 10px;
+        }
+        
+        .card {
+            background: var(--blanco);
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            font-family: inherit;
+            box-sizing: border-box;
+            background-color: var(--blanco);
+            transition: border-color 0.3s;
+        }
+        
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--burgundy);
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            border: 1px solid var(--burgundy);
+            background-color: var(--blanco);
+            color: var(--burgundy);
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-submit:hover {
+            background-color: var(--burgundy);
+            color: var(--blanco);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #333;
+            color: white;
+            width: 100%;
+        }
+        
+        .icon-box {
+            font-size: 1.5rem;
+            color: var(--burgundy);
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        #mensajeExito {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .navbar {
+            background-color: var(--color-fondo);
+            /* Usamos el color crema del fondo pero sólido */
+            border-bottom: 1px solid rgba(128, 0, 32, 0.1);
+            /* Un borde burgundy muy suave */
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            /* Asegura que siempre esté por encima de todo */
+            /* Añadimos una sombra para que no se mezcle con las cards blancas */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--color-texto);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-link {
+            color: var(--color-texto);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+            /* Suaviza el cambio de color */
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--burgundy);
+        }
+        /* OPCIONAL: Una pequeña línea debajo al hacer hover */
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 5px;
+            left: 50%;
+            background-color: var(--burgundy);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        
+        .nav-link:hover::after {
+            width: 70%;
+            /* La línea crece al pasar el ratón */
+        }
+        /* Clase para resaltar la página actual (debes añadirla manualmente al HTML de cada página) */
+        
+        .nav-link.active {
+            color: var(--burgundy);
+        }
+        /* Menú hamburguesa para móvil */
+        
+        .menu-toggle {
+            display: none;
+            /* Se oculta en PC */
+            flex-direction: column;
+            cursor: pointer;
+            background: transparent;
+            /* Forzamos fondo transparente */
+            border: none;
+            padding: 5px;
+            z-index: 10001;
+            outline: none;
+        }
+        
+        .bar {
+            display: block;
+            /* Asegura que se renderice como bloque */
+            width: 25px;
+            height: 3px;
+            background-color: #800020 !important;
+            /* Forzamos el color Burgundy directo */
+            margin: 4px 0;
+            transition: all 0.4s ease;
+            border-radius: 3px;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            .nav-menu {
+                position: absolute;
+                top: 65px;
+                left: -100%;
+                flex-direction: column;
+                background-color: var(--color-fondo);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+                border-top: 1px solid rgba(128, 0, 32, 0.1);
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-menu li {
+                padding: 15px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">M&Á</a>
+            <button class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="confirm.html" class="nav-link">Asistencia</a></li>
+                <li><a href="musica.html" class="nav-link">Setlist</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="intro-section">
+            <h1>Sugerencias</h1>
+            <p>¿Tienes alguna idea o comentario para nuestro gran día? <br> ¡Te leemos!</p>
+        </div>
+
+        <div class="card" id="formCard">
+            <form id="sugerenciaForm">
+                <div class="form-group">
+                    <label for="nombre">Tu Nombre</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="¿Quién nos escribe?" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo">¿Sobre qué es tu sugerencia?</label>
+                    <input type="text" id="tipo" name="tipo" placeholder="Ej: Transporte, Alojamiento, Sorpresas...">
+                </div>
+
+                <div class="form-group">
+                    <label for="mensaje">Tu mensaje</label>
+                    <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos con detalle..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Enviar Sugerencia</button>
+            </form>
+        </div>
+
+        <div class="card" id="mensajeExito">
+            <span class="icon-box">✉</span>
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--burgundy);">¡Recibido!</h2>
+            <p>Muchas gracias por tu idea. <br> La tendremos muy en cuenta para que todo salga perfecto.</p>
+            <div style="color: var(--burgundy); font-size: 2rem; margin-top: 20px;">❤</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Marta & Ángel &copy; 2025</p>
+    </footer>
+
+    <script>
+        document.getElementById('sugerenciaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('formCard').style.display = 'none';
+            document.getElementById('mensajeExito').style.display = 'block';
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const menu = document.querySelector('#mobile-menu');
+            const menuLinks = document.querySelector('.nav-menu');
+
+            if (menu) {
+                menu.addEventListener('click', function() {
+                    // Esto activa/desactiva la clase 'active' en la lista <ul>
+                    menuLinks.classList.toggle('active');
+                    // Esto sirve por si quieres animar la hamburguesa a X
+                    menu.classList.toggle('is-active');
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
