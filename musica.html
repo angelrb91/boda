@@ -287,7 +287,7 @@
     </nav>
     <div class="container">
         <div class="intro-section">
-            <h1>Setlist</h1>
+            <h1>Música</h1>
             <p>¿Qué canción no puede faltar en la pista de baile? <br> ¡Ayúdanos a montar la mejor fiesta!</p>
         </div>
 
@@ -295,12 +295,12 @@
             <form id="songForm">
                 <div class="form-group">
                     <label for="cancion">Título de la canción</label>
-                    <input type="text" id="cancion" name="cancion" placeholder="Ej: Flying Free" required>
+                    <input type="text" id="cancion" name="cancion" placeholder="Ej: Torres gemelas" required>
                 </div>
 
                 <div class="form-group">
                     <label for="artista">Artista / Grupo</label>
-                    <input type="text" id="artista" name="artista" placeholder="Ej: Pont Aeri" required>
+                    <input type="text" id="artista" name="artista" placeholder="Ej: Delfín Quispe" required>
                 </div>
 
                 <div class="form-group">
@@ -329,10 +329,30 @@
     </footer>
 
     <script>
-        document.getElementById('songForm').addEventListener('submit', function(e) {
+        document.getElementById('songForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             document.getElementById('formCard').style.display = 'none';
             document.getElementById('mensajeExito').style.display = 'block';
+
+            const payload = {
+                titulo: document.getElementById('cancion').value,
+                grupo: document.getElementById('artista').value,
+                dedicatoria: document.getElementById('dedicatoria').value
+            };
+
+            try {
+                const response = await fetch('https://boda-functions.vercel.app/api/setlist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload),
+                    mode: 'cors'
+                });
+            } catch (error) {
+                console.error("Error al enviar:", error);
+                alert("Hubo un problema al enviar tu respuesta. Por favor, inténtalo de nuevo.");
+            }
         });
 
         function resetForm() {

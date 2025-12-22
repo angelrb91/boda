@@ -282,7 +282,7 @@
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="confirm.html" class="nav-link">Asistencia</a></li>
-                <li><a href="musica.html" class="nav-link">Setlist</a></li>
+                <li><a href="musica.html" class="nav-link">Música</a></li>
             </ul>
         </div>
     </nav>
@@ -330,10 +330,30 @@
     </footer>
 
     <script>
-        document.getElementById('sugerenciaForm').addEventListener('submit', function(e) {
+        document.getElementById('sugerenciaForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             document.getElementById('formCard').style.display = 'none';
             document.getElementById('mensajeExito').style.display = 'block';
+
+            const payload = {
+                nombre: document.getElementById('nombre').value,
+                tema: document.getElementById('tipo').value,
+                sugerencia: document.getElementById('mensaje').value
+            };
+
+            try {
+                const response = await fetch('https://boda-functions.vercel.app/api/sugerencia', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload),
+                    mode: 'cors'
+                });
+            } catch (error) {
+                console.error("Error al enviar:", error);
+                alert("Hubo un problema al enviar tu respuesta. Por favor, inténtalo de nuevo.");
+            }
         });
 
         document.addEventListener('DOMContentLoaded', function() {
