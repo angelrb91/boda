@@ -31,15 +31,29 @@
         /* 1. BANNER HERO */
         
         .hero {
-            height: 70vh;
-            background: url("img/foto-banner.jpeg");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
+            height: 50vh;
+            /* Puedes bajar esto a 50vh si quieres que la sección sea más baja */
+            position: relative;
+            overflow: hidden;
             background-color: var(--color-fondo);
-            background-blend-mode: multiply;
-            max-width: 100%;
-            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-bg {
+            /* En lugar de cubrir todo, hacemos que el video mande */
+            max-width: 90%;
+            /* Controla qué tan "pequeño" lo quieres (ej. 80% o 90%) */
+            max-height: 90%;
+            /* Evita que se corte por arriba o abajo */
+            /* Cambiamos 'cover' por 'contain' para ver el video completo */
+            object-fit: contain;
+            /* Eliminamos el posicionamiento absoluto para que respete sus proporciones */
+            position: relative;
+            z-index: 0;
+            /* Mejora un poco la nitidez en algunos navegadores */
+            image-rendering: -webkit-optimize-contrast;
         }
         /* 2. SECCIÓN NOMBRES */
         
@@ -401,8 +415,13 @@
             </ul>
         </div>
     </nav>
-    <header class="hero"></header>
+    <section class="hero">
+        <video autoplay muted loop playsinline class="video-bg">
+        <source src="img/banner.mp4" type="video/mp4">
+    </video>
 
+    </section>
+    </section>
     <section class="names-heading">
         <h1>Marta & Ángel</h1>
         <div class="divider"></div>
