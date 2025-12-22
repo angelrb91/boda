@@ -10,8 +10,8 @@
          :root {
             --burgundy: #800020;
             --color-texto: #333333;
-            --color-fondo: #f9f6f2;
-            --blanco: #ffffff;
+            --color-fondo: #f9f7f4;
+            --blanco: #F9F9F9;
         }
         /* ESTRUCTURA PARA FOOTER FIJO ABAJO */
         
@@ -332,6 +332,19 @@
     <script>
         document.getElementById('sugerenciaForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const videoElement = document.getElementById('gifExito');
+            const sourceElement = videoElement.querySelector('source');
+            const nombre = document.getElementById('nombre').value.toLowerCase();
+
+            if (nombre.includes("antu") || nombre.includes("antúnez") || nombre.includes("antulopez") || nombre.includes("antúlopez")) {
+                sourceElement.src = "/img/antu.mp4";
+            } else {
+                sourceElement.src = "/img/sugerencia.mp4";
+            }
+
+            // Actualizamos el reproductor
+            videoElement.load();
+            videoElement.play();
             document.getElementById('formCard').style.display = 'none';
             document.getElementById('mensajeExito').style.display = 'block';
 
