@@ -267,8 +267,56 @@
                 padding: 15px 0;
             }
         }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @keyframes dangerFlash {
+            0% {
+                background-color: rgba(255, 0, 0, 0.2);
+            }
+            50% {
+                background-color: rgba(255, 0, 0, 0.8);
+            }
+            100% {
+                background-color: rgba(255, 0, 0, 0.2);
+            }
+        }
+        
+        .danger {
+            animation: dangerFlash 0.4s infinite;
+        }
+        /* Imagen que sube desde el fondo */
+        
+        #dangerImage {
+            position: fixed;
+            inset: 0;
+            background-image: url("danger.jpg");
+            background-size: cover;
+            background-position: center;
+            z-index: 2000;
+            transform: translateY(100%);
+            transition: transform 1s ease-out;
+        }
+        
+        #dangerImage.show {
+            transform: translateY(0);
+        }
     </style>
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LF6JQY8PM2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-LF6JQY8PM2');
+</script>
 
 <body>
     <nav class="navbar">
@@ -286,7 +334,7 @@
             </ul>
         </div>
     </nav>
-    <div class="container">
+    <div id="container" class="container">
         <div class="intro-section">
             <h1>Sugerencias</h1>
             <p>¿Tienes alguna idea o comentario para nuestro gran día? <br> ¡Te leemos!</p>
@@ -323,6 +371,7 @@
             <p>Muchas gracias por tu idea. <br> La tendremos muy en cuenta para que todo salga perfecto.</p>
             <div style="color: var(--burgundy); font-size: 2rem; margin-top: 20px;">❤</div>
         </div>
+        <div id="dangerImage" class="hidden"></div>
     </div>
 
     <footer>
@@ -335,7 +384,7 @@
             const videoElement = document.getElementById('gifExito');
             const sourceElement = videoElement.querySelector('source');
             const nombre = document.getElementById('nombre').value.toLowerCase();
-
+            const overlay = document.getElementById("container");
             if (nombre.includes("antu") || nombre.includes("antúnez") || nombre.includes("antulopez") || nombre.includes("antúlopez")) {
                 sourceElement.src = "/img/antu.mp4";
             } else {
@@ -347,6 +396,8 @@
             videoElement.play();
             document.getElementById('formCard').style.display = 'none';
             document.getElementById('mensajeExito').style.display = 'block';
+
+            setTimeout(triggerDangerMode, 6000);
 
             const payload = {
                 nombre: document.getElementById('nombre').value,
@@ -382,6 +433,19 @@
                 });
             }
         });
+
+        function triggerDangerMode() {
+            const overlay = document.getElementById("container");
+            const dangerImage = document.getElementById("dangerImage");
+            // 🚨 Parpadeo rojo
+            document.body.classList.add("danger");
+
+            // 🖼️ Imagen desde el fondo
+            dangerImage.classList.remove("hidden");
+            requestAnimationFrame(() => {
+                dangerImage.classList.add("show");
+            });
+        }
     </script>
 
 </body>
